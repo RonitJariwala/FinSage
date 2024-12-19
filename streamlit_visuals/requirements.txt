@@ -1,0 +1,8 @@
+llama-index-embeddings-together
+llama-index
+langchain_community
+sentence-transformers
+together
+pandas
+seaborn
+matplotlib
