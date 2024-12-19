@@ -27,7 +27,8 @@
 ## Screenshots
 
 ### Screenshot 1: Description of what this screenshot shows
-![Screenshot 1](Images/Screenshot(3).png)
+![Screenshot](Images/Screenshot\ \(3\).png)
+
 
 ### Screenshot 2: Description of what this screenshot shows
 ![Screenshot 2](Screenshots/Screenshot2.png)
