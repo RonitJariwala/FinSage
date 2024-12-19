@@ -26,17 +26,27 @@
 
 ## Screenshots
 
-### Screenshot 1: Description of what this screenshot shows
-![Screenshot](Images/1.png)
+### UI
+![Screenshot](Images/3.png)
 
 
-### Screenshot 2: Description of what this screenshot shows
-![Screenshot 2](Screenshots/Screenshot2.png)
+### Login Page
+![Screenshot 2](Images/4.png)
 
-### Screenshot 3: Description of what this screenshot shows
-![Screenshot 3](Screenshots/Screenshot3.png)
+### Dashboard
+![Screenshot 3](Images/4.png)
 
+### Dashboard
+![Screenshot 3](Images/5.png)
 
+### Features Overview
+![Screenshot 3](Images/6.png)
+
+### Conversations
+![Screenshot 3](Images/7.png)
+
+### Insights
+![Screenshot 3](Images/8.png)
 
 
 
