@@ -48,6 +48,12 @@
 ### Insights
 ![Screenshot 3](Images/8.png)
 
+### ChatBot Functionality
+![Screenshot 3](Images/1.png)
+
+### Visualization
+![Screenshot 3](Images/2.png)
+
 
 
 ## Setup Guide
