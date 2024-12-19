@@ -26,7 +26,15 @@
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+### Screenshot 1: Description of what this screenshot shows
+![Screenshot 1](Screenshots/Screenshot1.png)
+
+### Screenshot 2: Description of what this screenshot shows
+![Screenshot 2](Screenshots/Screenshot2.png)
+
+### Screenshot 3: Description of what this screenshot shows
+![Screenshot 3](Screenshots/Screenshot3.png)
+
 
 
 
