@@ -1,0 +1,11 @@
+llama-index-core
+llama-index-embeddings-together
+llama-index-together
+langchain-community
+sentence-transformers
+together-ai
+pandas
+seaborn
+matplotlib
+flask
+flask-cors
