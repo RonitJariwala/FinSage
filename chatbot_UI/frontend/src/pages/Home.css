@@ -1,3 +1,4 @@
+/* General Styling */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -29,6 +30,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .logo-container {
@@ -36,9 +38,22 @@ img {
   align-items: center;
 }
 
+/* Updated Logo Styling */
 .logo {
   height: 50px;
+  width: auto;
+  max-width: 100px;         /* Restrict the maximum width */
+  object-fit: contain;
+  border: 2px solid #00aaff; /* Adds a colored border */
+  border-radius: 8px;       /* Rounded corners */
+  padding: 4px;             /* Internal spacing */
   margin-right: 10px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  border-color: #1e90ff;
 }
 
 .brand-name {
@@ -76,11 +91,13 @@ img {
 .hero-content h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .hero-content p {
   font-size: 1.2rem;
   margin-bottom: 30px;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 .cta-button {
@@ -97,6 +114,17 @@ img {
 .cta-button:hover {
   transform: scale(1.05);
   background-color: #1e90ff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Features Section */
@@ -192,19 +220,20 @@ img {
 }
 
 .social-icons {
-  margin-top: 15px; /* Add spacing below "Follow Us" */
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-.social-icons img {
-  width: 35px;
-  height: 35px;
+/* For social icon images */
+.social-icons .social-icon {
+  max-height: 40px;
+  max-width: 40px;
   transition: transform 0.3s ease;
 }
 
-.social-icons img:hover {
+.social-icons .social-icon:hover {
   transform: scale(1.2);
 }
 
