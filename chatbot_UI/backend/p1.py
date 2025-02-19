@@ -99,6 +99,74 @@ def generate_pie_chart():
     encoded_image = base64.b64encode(img_buf.getvalue()).decode("utf-8")
     return encoded_image
 
+# Function to generate a line chart for monthly savings
+def generate_line_chart():
+    labels = ["Jan", "Feb", "Mar", "Apr", "May"]
+    values = [2000, 3000, 4000, 3500, 4500]
+
+    plt.figure(figsize=(6, 4))
+    plt.plot(labels, values, marker='o', color='blue', linewidth=2)
+    plt.fill_between(labels, values, color='skyblue', alpha=0.4)
+    plt.title("Monthly Savings Trend")
+    plt.xlabel("Month")
+    plt.ylabel("Savings")
+    plt.grid(True)
+
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format='png', bbox_inches='tight')
+    plt.close()
+
+    img_buf.seek(0)
+    encoded_image = base64.b64encode(img_buf.getvalue()).decode("utf-8")
+    return encoded_image
+
+# Function to generate a stacked bar chart for expenses
+def generate_stacked_bar_chart():
+    # Example data for stacked bar chart
+    categories = ["Rent", "Food", "Transport", "Entertainment"]
+    fixed = [1200, 600, 300, 150]
+    variable = [300, 200, 100, 50]
+
+    ind = np.arange(len(categories))
+    width = 0.5
+
+    plt.figure(figsize=(6, 4))
+    plt.bar(ind, fixed, width, label='Fixed', color='skyblue')
+    plt.bar(ind, variable, width, bottom=fixed, label='Variable', color='lightgreen')
+    plt.ylabel("Expenses")
+    plt.title("Monthly Expenses by Category")
+    plt.xticks(ind, categories)
+    plt.legend()
+
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format='png', bbox_inches='tight')
+    plt.close()
+
+    img_buf.seek(0)
+    encoded_image = base64.b64encode(img_buf.getvalue()).decode("utf-8")
+    return encoded_image
+
+# Function to generate a scatter plot for financial comparison
+def generate_scatter_plot():
+    # Example data for scatter plot: Income vs. Spending
+    x = [3000, 4000, 3500, 5000, 4500]  # Income values
+    y = [2000, 2500, 2200, 3000, 2800]  # Spending values
+
+    plt.figure(figsize=(6, 4))
+    plt.scatter(x, y, color='red')
+    plt.title("Income vs. Spending")
+    plt.xlabel("Income")
+    plt.ylabel("Spending")
+    plt.grid(True)
+
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format='png', bbox_inches='tight')
+    plt.close()
+
+    img_buf.seek(0)
+    encoded_image = base64.b64encode(img_buf.getvalue()).decode("utf-8")
+    return encoded_image
+
 # Home route
 @app.route("/")
 def home():
@@ -124,13 +192,36 @@ def process_query():
 
         # Check if query requires visualization
         chart_data = None
-        if "pie chart" in user_query.lower() or "expense breakdown" in user_query.lower():
+        lower_query = user_query.lower()
+        if "pie chart" in lower_query or "expense breakdown" in lower_query:
             chart_data = {
                 "type": "pie",
                 "proportions": True,
                 "labels": ["Rent", "Food", "Transport", "Entertainment"],
                 "values": [1200, 600, 300, 150],
                 "image": generate_pie_chart()  # Base64 encoded image
+            }
+        elif "line chart" in lower_query or "line graph" in lower_query or "trend" in lower_query:
+            chart_data = {
+                "type": "line",
+                "labels": ["Jan", "Feb", "Mar", "Apr", "May"],
+                "values": [2000, 3000, 4000, 3500, 4500],
+                "image": generate_line_chart()  # Base64 encoded image
+            }
+        elif "stacked bar" in lower_query or "stacked bar chart" in lower_query:
+            chart_data = {
+                "type": "stacked",
+                "labels": ["Rent", "Food", "Transport", "Entertainment"],
+                "fixed": [1200, 600, 300, 150],
+                "variable": [300, 200, 100, 50],
+                "image": generate_stacked_bar_chart()  # Base64 encoded image
+            }
+        elif "scatter plot" in lower_query or "scatter" in lower_query:
+            chart_data = {
+                "type": "scatter",
+                "x": [3000, 4000, 3500, 5000, 4500],
+                "y": [2000, 2500, 2200, 3000, 2800],
+                "image": generate_scatter_plot()  # Base64 encoded image
             }
 
         return jsonify({"answer": generated_answer, "chart": chart_data})
