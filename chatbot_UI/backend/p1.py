@@ -88,7 +88,7 @@ def generate_custom_answer(user_query, relevant_question, relevant_answer):
     except Exception as e:
         return f"Error generating response: {str(e)}"
 
-# Chart generation functions
+# Chart generation functions (unchanged as requested)
 def generate_pie_chart():
     labels = ["Rent", "Food", "Transport", "Entertainment"]
     values = [1200, 600, 300, 150]

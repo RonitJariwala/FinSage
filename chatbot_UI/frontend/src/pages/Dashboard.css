@@ -6,18 +6,19 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
   padding: 2rem;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Dashboard Container */
 .dashboard-container {
   width: 100%;
   max-width: 1200px;
-  background-color: #1a233a;
+  background: rgba(26, 35, 58, 0.9);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  font-family: 'Roboto', sans-serif;
-  color: #ecf0f1;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Header Styling */
@@ -28,40 +29,25 @@
   font-weight: 700;
   margin-bottom: 1rem;
   text-shadow: 0 2px 4px rgba(0, 188, 212, 0.2);
-  background: linear-gradient(45deg, #00bcd4, #0097a7);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Charts Grid */
-.charts-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: space-between;
-}
+
 
 /* Chart Section */
 .chart-section {
-  background-color: #0f172a;
+  background: rgba(15, 23, 42, 0.8);
   border-radius: 15px;
-  border: 1px solid rgba(0, 188, 212, 0.1);
   padding: 1.5rem;
+  border: 1px solid rgba(0, 188, 212, 0.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  flex: 1 1 calc(50% - 1.5rem);  /* Two sections side by side */
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 /* Chart Section Heading */
 .chart-section h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #00bcd4;
-  font-weight: bold;
   margin-bottom: 1rem;
 }
 
@@ -75,27 +61,18 @@
 /* Error Message */
 .error {
   text-align: center;
-  color: #ff4c4c;
-  font-weight: bold;
-  margin-top: 1rem;
+  color: #ff6b6b;
+  font-weight: 600;
+  padding: 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 107, 107, 0.2);
 }
 
 /* Loading Message */
 .dashboard-container p {
   text-align: center;
   font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* Responsive Fixes */
-@media (max-width: 768px) {
-  .charts-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .chart-section {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
+  color: #00bcd4;
+  font-weight: 500;
 }

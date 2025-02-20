@@ -14,7 +14,7 @@ import {
 import { Pie, Line, Bar, Scatter } from "react-chartjs-2";
 import "./Dashboard.css";
 
-// Register Chart.js components
+// Register Chart.js components and plugins
 ChartJS.register(
   ArcElement,
   CategoryScale,
@@ -110,6 +110,8 @@ const Dashboard = () => {
                   "#4BC0C0",
                   "#9966FF",
                 ],
+                borderWidth: 2,
+                borderColor: "#1a233a",
               },
             ],
           });
@@ -140,12 +142,13 @@ const Dashboard = () => {
               {
                 label: "Monthly Savings Trend",
                 data: values,
-                fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.4)",
+                fill: true,
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
                 borderColor: "rgba(75, 192, 192, 1)",
-                tension: 0.1,
+                tension: 0.4,
                 pointRadius: 5,
-                borderWidth: 2,
+                pointHoverRadius: 8,
+                borderWidth: 3,
               },
             ],
           });
@@ -182,11 +185,15 @@ const Dashboard = () => {
                 label: "Fixed Expenses",
                 data: fixedValues,
                 backgroundColor: "rgba(54, 162, 235, 0.7)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
               },
               {
                 label: "Variable Expenses",
                 data: variableValues,
                 backgroundColor: "rgba(255, 206, 86, 0.7)",
+                borderColor: "rgba(255, 206, 86, 1)",
+                borderWidth: 1,
               },
             ],
           });
@@ -238,6 +245,7 @@ const Dashboard = () => {
                 data: scatterData,
                 backgroundColor: "rgba(255, 99, 132, 1)",
                 pointRadius: 5,
+                pointHoverRadius: 8,
               },
               {
                 label: "Best Fit Line",
@@ -264,16 +272,48 @@ const Dashboard = () => {
     fetchChartData();
   }, []);
 
-  // Default chart options
+  // Default chart options for non-pie charts
   const defaultOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          color: "#ecf0f1",
+          font: {
+            size: 14,
+            weight: "500",
+          },
+        },
       },
       tooltip: {
         enabled: true,
+        backgroundColor: "rgba(26, 35, 58, 0.9)",
+        titleColor: "#00bcd4",
+        bodyColor: "#ecf0f1",
+        borderColor: "rgba(0, 188, 212, 0.3)",
+        borderWidth: 1,
+        cornerRadius: 10,
+        padding: 12,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+        ticks: {
+          color: "#ecf0f1",
+        },
+      },
+      y: {
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+        ticks: {
+          color: "#ecf0f1",
+        },
       },
     },
   };
@@ -294,6 +334,28 @@ const Dashboard = () => {
       scales: {
         x: { stacked: true },
         y: { stacked: true },
+      },
+    };
+  } else if (chartType === "pie") {
+    // For the pie chart, remove scales entirely and include data labels with percentiles and category names.
+    chartOptions = {
+      ...defaultOptions,
+      scales: {}, // Remove any scales (not applicable for pie charts)
+      plugins: {
+        ...defaultOptions.plugins,
+        datalabels: {
+          color: "#fff",
+          formatter: (value, context) => {
+            const label = context.chart.data.labels[context.dataIndex];
+            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(2) + "%";
+            return `${label}\n${percentage}`;
+          },
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
       },
     };
   }
