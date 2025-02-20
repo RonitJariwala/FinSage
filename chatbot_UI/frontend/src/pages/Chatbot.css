@@ -138,8 +138,8 @@
   text-align: right;
 }
 
-/* Form Input */
-.message-form {
+/* Form Input Container */
+.message-form-container {
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -147,7 +147,7 @@
   margin-bottom: 1.5rem;
 }
 
-.message-form input {
+.message-form-container input {
   flex: 1;
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
@@ -158,30 +158,38 @@
   transition: all 0.3s ease;
 }
 
-.message-form input:focus {
+.message-form-container input:focus {
   border-color: #00bcd4;
   box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
   outline: none;
 }
 
-.message-form button {
+/* Combined Button (Send/Voice) */
+.combined-button {
   padding: 1.2rem 2rem;
   background: linear-gradient(135deg, #00bcd4, #0097a7);
-  color: white;
-  font-size: 1.1rem;
   border: none;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
 }
 
-.message-form button:hover {
+.combined-button:hover {
   background: linear-gradient(135deg, #00acc1, #00838f);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
 }
 
-/* Input Container */
+.combined-button .icon {
+  width: 1.2rem;
+  height: auto;
+}
+
+/* Input Container for Visualization Data */
 .input-container {
   display: flex;
   flex-direction: column;
@@ -250,12 +258,21 @@
   animation: bounce 1.4s infinite ease-in-out;
 }
 
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes bounce {
-  0%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-10px); }
+  0%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Empty State */
@@ -291,11 +308,11 @@
     padding: 1rem;
   }
   
-  .message-form {
+  .message-form-container {
     flex-direction: column;
   }
   
-  .message-form button {
+  .combined-button {
     width: 100%;
   }
 }
@@ -318,4 +335,3 @@
     font-size: 1rem;
   }
 }
-

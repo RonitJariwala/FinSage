@@ -12,6 +12,30 @@ body {
   overflow-y: auto; /* Enable scrolling for long content */
 }
 
+/* Dark Mode Toggle */
+/* Define theme variables for dark and light modes */
+body.dark-mode {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --primary-color: #00aaff;
+  --secondary-color: #1e90ff;
+}
+
+body.light-mode {
+  --background-color: #f0f0f0;
+  --text-color: #121212;
+  --primary-color: #0056b3;
+  --secondary-color: #007bff;
+}
+
+/* Apply the theme variables */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
 /* Navigation Styles */
 nav {
   background-color: #1f1f1f;

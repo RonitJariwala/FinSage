@@ -1,9 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Chatbot.css";
 import logo from "./logo.png";
 
+// Icon paths from your public folder
+const sendIcon = "/square-arrow-up-right-solid.svg";
+const microphoneIcon = "/microphone-solid.svg";
+const microphoneSlashIcon = "/microphone-slash-solid.svg";
+
 const Chatbot = () => {
+  // State for messages, input, loading, visualization, etc.
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,12 +25,18 @@ const Chatbot = () => {
   const [scatterX, setScatterX] = useState("");
   const [scatterY, setScatterY] = useState("");
 
+  // State for voice recognition
+  const [isListening, setIsListening] = useState(false);
+
+  // Refs for scrolling and Speech Recognition instance
   const chatWindowRef = useRef(null);
   const inputContainerRef = useRef(null);
+  const recognitionRef = useRef(null);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Load chat history from localStorage when component mounts or route changes
+  // Load chat history on mount or when route changes
   useEffect(() => {
     const savedMessages = localStorage.getItem("chatHistory");
     if (savedMessages) {
@@ -41,26 +53,23 @@ const Chatbot = () => {
     localStorage.setItem("chatHistory", JSON.stringify(messages));
   }, [messages]);
 
-  // Auto-scroll to bottom when new messages are added
+  // Auto-scroll chat window when new messages are added
   useEffect(() => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Scroll input fields into view when they appear
+  // Scroll input container into view when needed
   useEffect(() => {
     if (showInputFields && inputContainerRef.current) {
       inputContainerRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [showInputFields]);
 
-  // Send user message and fetch bot response
-  const sendMessage = async (e) => {
-    e.preventDefault();
-    if (!userMessage.trim()) return;
-
-    const newMessage = { sender: "user", text: userMessage };
+  // Wrap handleUserMessage with useCallback for stability
+  const handleUserMessage = useCallback(async (messageText) => {
+    const newMessage = { sender: "user", text: messageText };
     setMessages((prev) => [...prev, newMessage]);
     setUserMessage("");
     setLoading(true);
@@ -69,65 +78,32 @@ const Chatbot = () => {
       const response = await fetch("http://localhost:5000/api/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: userMessage }),
+        body: JSON.stringify({ query: messageText }),
       });
       if (!response.ok) throw new Error("Failed to fetch response");
 
       const data = await response.json();
       let botResponse = data.answer || "Sorry, I couldn't generate a response.";
 
+      // Define keywords for visualization detection
       const pieKeywords = [
-        "pie chart",
-        "pie",
-        "proportions",
-        "expense breakdown",
-        "distributions",
-        "doughnut chart",
-        "ring chart",
-        "budget breakdown",
-        "spending distribution",
-        "percentage breakdown"
+        "pie chart", "pie", "proportions", "expense breakdown", "distributions",
+        "doughnut chart", "ring chart", "budget breakdown", "spending distribution", "percentage breakdown"
       ];
-
       const lineKeywords = [
-        "line graph",
-        "line chart",
-        "trend",
-        "time series",
-        "growth trend",
-        "savings trend",
-        "performance trend",
-        "progress over time",
-        "continuous data",
-        "sequential data"
+        "line graph", "line chart", "trend", "time series", "growth trend",
+        "savings trend", "performance trend", "progress over time", "continuous data", "sequential data"
       ];
-
       const stackedKeywords = [
-        "stacked bar",
-        "stacked bar chart",
-        "stacked column",
-        "cumulative expenses",
-        "expense breakdown",
-        "expense stack",
-        "bar breakdown",
-        "layered bar",
-        "grouped stacked"
+        "stacked bar", "stacked bar chart", "stacked column", "cumulative expenses",
+        "expense breakdown", "expense stack", "bar breakdown", "layered bar", "grouped stacked"
       ];
-
       const scatterKeywords = [
-        "scatter plot",
-        "scatter",
-        "scatter diagram",
-        "dot plot",
-        "correlation",
-        "relationship",
-        "financial correlation",
-        "data distribution",
-        "point plot",
-        "dispersion plot"
+        "scatter plot", "scatter", "scatter diagram", "dot plot", "correlation",
+        "relationship", "financial correlation", "data distribution", "point plot", "dispersion plot"
       ];
 
-      const lowerQuery = userMessage.toLowerCase();
+      const lowerQuery = messageText.toLowerCase();
       if (pieKeywords.some((keyword) => lowerQuery.includes(keyword))) {
         botResponse = "Please enter categories and values for your pie chart.";
         setVisualizationType("pie");
@@ -148,7 +124,6 @@ const Chatbot = () => {
         setShowInputFields(false);
         setVisualizationType(null);
       }
-
       setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
     } catch (error) {
       console.error("Error fetching response:", error);
@@ -158,6 +133,69 @@ const Chatbot = () => {
       ]);
     } finally {
       setLoading(false);
+    }
+  }, []);
+
+  // Wrap handleVoiceMessage with useCallback for stability
+  const handleVoiceMessage = useCallback(async (transcript) => {
+    if (!transcript.trim()) return;
+    await handleUserMessage(transcript);
+  }, [handleUserMessage]);
+
+  // Initialize Speech Recognition if supported
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        handleVoiceMessage(transcript);
+      };
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event);
+        setIsListening(false);
+      };
+      recognitionRef.current = recognition;
+    } else {
+      console.error("Speech Recognition API not supported in this browser.");
+    }
+  }, [handleVoiceMessage]);
+
+  // Combined action for the single button:
+  // If listening, stop; if text exists, send; otherwise, start listening.
+  const handleCombinedAction = async (e) => {
+    e.preventDefault();
+    if (isListening) {
+      recognitionRef.current && recognitionRef.current.stop();
+      setIsListening(false);
+    } else if (userMessage.trim() !== "") {
+      await handleUserMessage(userMessage);
+    } else {
+      recognitionRef.current && recognitionRef.current.start();
+      setIsListening(true);
+    }
+  };
+
+  // End chat: clears messages and stops voice recognition
+  const handleEndChat = () => {
+    if (isListening) {
+      recognitionRef.current && recognitionRef.current.stop();
+      setIsListening(false);
+    }
+    setMessages([]);
+  };
+
+  // Handle Enter key on input field
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleCombinedAction(e);
     }
   };
 
@@ -281,25 +319,18 @@ const Chatbot = () => {
                   <img src={logo} alt="FinSage Logo" className="chatbot-logo" />
                 </p>
               </div>
-              <p>
-                Ask me about personal finance, budgeting, investments, or charting your data.
-              </p>
+              <p>Ask me about personal finance, budgeting, investments, or charting your data.</p>
             </div>
           ) : (
             messages.map((message, index) => (
               <div
                 key={index}
                 className={`chat-message ${message.sender}`}
-                style={{
-                  alignSelf: message.sender === "user" ? "flex-end" : "flex-start",
-                }}
+                style={{ alignSelf: message.sender === "user" ? "flex-end" : "flex-start" }}
               >
                 <p>{message.text}</p>
                 <span className="message-time">
-                  {new Date().toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </span>
               </div>
             ))
@@ -314,18 +345,30 @@ const Chatbot = () => {
             </div>
           )}
         </div>
-        <form className="message-form" onSubmit={sendMessage}>
+        <div className="message-form-container">
           <input
             type="text"
             placeholder="Type a message..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             disabled={loading}
           />
-          <button type="submit" disabled={loading}>
-            Send
+          <button
+            type="button"
+            className="combined-button"
+            onClick={handleCombinedAction}
+            disabled={loading}
+          >
+            {userMessage.trim() !== "" ? (
+              <img src={sendIcon} alt="Send" className="icon" />
+            ) : isListening ? (
+              <img src={microphoneSlashIcon} alt="Stop" className="icon" />
+            ) : (
+              <img src={microphoneIcon} alt="Speak" className="icon" />
+            )}
           </button>
-        </form>
+        </div>
         {showInputFields && (
           <div className="input-container" ref={inputContainerRef}>
             {visualizationType === "pie" && (
