@@ -1,0 +1,2 @@
+chatbot_ui/backend/myenv/lib/python3.9/site-packages/pyarrow/libarrow.1800.dylib filter=lfs diff=lfs merge=lfs -text
+chatbot_ui/backend/myenv/lib/python3.9/site-packages/torch/lib/libtorch_cpu.dylib filter=lfs diff=lfs merge=lfs -text
