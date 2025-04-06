@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import "./Home.css";
@@ -6,7 +5,6 @@ import expenseTrackingImage from "./expense-tracking.jpg";
 import FinancialInsightsImage from "./financial-insights.jpeg";
 import InvestmentStrategiesImage from "./investment-stratergies.jpg";
 import MapComponent from "./MapComponent";
-import logo from "./logo.png";
 import twitterIcon from "./twitter-logo.jpg";
 import linkedinIcon from "./linkedin-logo.png";
 import facebookIcon from "./facebook-icon.png";
@@ -42,8 +40,7 @@ const Home = () => {
       {/* Header */}
       <header className="header">
         <div className="logo-container">
-          <img src={logo} alt="Finsage Logo" className="logo" />
-          <h1 className="brand-name">FINSAGE</h1>
+          <h1 className="brand-name"></h1>
         </div>
         <nav className="nav-bar">
           <a href="#features">Why Us</a>
@@ -56,9 +53,12 @@ const Home = () => {
       <section className="hero">
         <div className="hero-content">
           <h1>Take Control of Your Financial Future</h1>
-          <p>
-            Simplify your financial journey with Finsage. Track expenses, learn investment strategies, and gain personalized insights—all in one place.
-          </p>
+          <p>   </p>
+          <p>   </p>
+          <p>   </p>
+          <p>Simplify your financial journey with Finsage.</p>
+          <p>Track Expenses - Learn To Invest - Gain Personalized Insights</p>
+          <p>All in one place!</p>
         </div>
       </section>
 

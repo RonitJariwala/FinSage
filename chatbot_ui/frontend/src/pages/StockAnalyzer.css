@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
+
+.stock-analyzer-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f, #1f1f2e); /* Matches WhatsHot background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  font-family: "Inter", sans-serif; /* Matches WhatsHot font */
+}
+
+.stock-analyzer-glass {
+  background: rgba(255, 255, 255, 0.05); /* Glassmorphism from WhatsHot */
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1); /* Matches WhatsHot shadow */
+  color: white;
+}
+
+.stock-analyzer-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock-analyzer-title::before {
+  content: "📈";
+  margin-right: 10px;
+}
+
+.stock-input {
+  display: flex;
+  gap: 1rem; /* Matches WhatsHot gap */
+  margin-bottom: 2rem; /* Matches WhatsHot spacing */
+}
+
+.stock-input input {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px; /* Matches WhatsHot input radius */
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05); /* Matches WhatsHot input background */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Matches WhatsHot border */
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.stock-input input::placeholder {
+  color: #ccc; /* Matches WhatsHot placeholder */
+}
+
+.stock-input input:focus {
+  background-color: rgba(255, 255, 255, 0.15); /* Matches WhatsHot focus */
+}
+
+.stock-input button {
+  padding: 1rem 2rem; /* Matches WhatsHot button padding */
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  color: #000;
+  border: none;
+  border-radius: 10px; /* Matches WhatsHot button radius */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.stock-input button:hover {
+  transform: scale(1.05); /* Matches WhatsHot hover effect */
+}
+
+.stock-input button:disabled {
+  background-color: rgba(255, 255, 255, 0.1); /* Adjusted for disabled state */
+  cursor: not-allowed;
+}
+
+.selector-container {
+  display: flex;
+  gap: 1rem; /* Matches WhatsHot gap */
+  margin-bottom: 2rem; /* Matches WhatsHot spacing */
+}
+
+.selector-container select {
+  padding: 1rem;
+  border: none;
+  border-radius: 10px; /* Matches WhatsHot input radius */
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05); /* Matches WhatsHot input background */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Matches WhatsHot border */
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.selector-container select:focus {
+  background-color: rgba(255, 255, 255, 0.15); /* Matches WhatsHot focus */
+}
+
+.selector-container select:disabled {
+  background-color: rgba(255, 255, 255, 0.1); /* Adjusted for disabled state */
+  cursor: not-allowed;
+}
+
+.stock-list {
+  display: flex;
+  gap: 1.5rem; /* Matches WhatsHot card gap */
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem; /* Matches WhatsHot spacing */
+}
+
+.stock-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.2rem; /* Adjusted for consistency */
+  background: rgba(255, 255, 255, 0.06); /* Matches WhatsHot card background */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Matches WhatsHot border */
+  border-radius: 15px; /* Matches WhatsHot card radius */
+  font-size: 1rem;
+  color: #e0e0e0;
+  transition: all 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.stock-item:hover {
+  transform: translateY(-5px); /* Matches WhatsHot hover effect */
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); /* Matches WhatsHot shadow */
+}
+
+.stock-item button {
+  margin-left: 10px;
+  padding: 0.4rem 1rem; /* Adjusted for consistency */
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.stock-item button:hover {
+  background-color: #cc0000;
+}
+
+.loading {
+  color: #aaa; /* Adjusted to match WhatsHot empty state */
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 2rem; /* Matches WhatsHot spacing */
+  opacity: 0.7; /* Matches WhatsHot opacity */
+}
+
+.chart-container {
+  width: 100%;
+  padding: 1.5rem; /* Adjusted for consistency */
+  background: rgba(255, 255, 255, 0.06); /* Matches WhatsHot card background */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Matches WhatsHot border */
+  border-radius: 15px; /* Matches WhatsHot card radius */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05); /* Matches WhatsHot shadow */
+  transition: all 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.chart-container:hover {
+  transform: translateY(-5px); /* Matches WhatsHot hover effect */
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); /* Matches WhatsHot shadow */
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 500px !important; /* Increased height for better visibility */
+  max-height: 600px;
+}
+
+.no-data {
+  color: #aaa; /* Adjusted to match WhatsHot empty state */
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 1.5rem; /* Adjusted for consistency */
+  opacity: 0.7; /* Matches WhatsHot opacity */
+}

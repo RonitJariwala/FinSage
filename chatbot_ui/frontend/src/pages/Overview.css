@@ -1,116 +1,11 @@
-/* body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000; 
-    color: #e0e0e0; 
-  }
-  
-  .overview-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    background: #001f3f; 
-  }
-  
-  .left-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #001f3f; 
-    position: relative;
-  }
-  
-  .logo-circle {
-    width: 70%;
-    height: 70%;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
-    border: 5px solid #00aaff;
-  }
-  
-  .social-icons {
-    position: absolute;
-    bottom: 20px;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .social-icon {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 50%;
-    background-color: #001f3f;
-    padding: 8px;
-  }
-  
-  .social-icon:hover {
-    transform: scale(1.2);
-    box-shadow: 0 5px 15px rgba(0, 170, 255, 0.5);
-  }
-  
-  .right-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 50px;
-    background-color: #001f3f;
-  }
-  
-  .title {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: #ffffff;
-  }
-  
-  .highlight {
-    color: #00aaff; 
-  }
-  
-  .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #e0e0e0;
-  }
-  
-  .description {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: #cccccc;
-  }
-  
-  .get-started-button {
-    background-color: #00aaff; 
-    color: #ffffff;
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .get-started-button:hover {
-    transform: scale(1.1);
-    background-color: #004e92;
-  } */
-
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
 
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif; /* Replaced Arial with Inter for consistency */
-  background: linear-gradient(135deg, #0f0f0f, #1f1f2e); /* Consistent dark gradient */
-  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1f1f2e);
+  color: white;
   scroll-behavior: smooth;
 }
 
@@ -123,10 +18,10 @@ body, html {
 
 .overview-container {
   display: flex;
-  height: 80vh; /* Adjusted for better vertical centering */
+  height: 80vh;
   width: 90%;
   max-width: 1200px;
-  background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -138,7 +33,7 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: transparent; /* Removed solid color for glass effect */
+  background: transparent;
   position: relative;
 }
 
@@ -148,7 +43,7 @@ body, html {
   object-fit: cover;
   border-radius: 50%;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
-  border: 5px solid #00f0ff; /* Updated to match WhatsHot gradient start */
+  border: 5px solid #00f0ff;
   transition: transform 0.3s ease;
 }
 
@@ -169,7 +64,7 @@ body, html {
   object-fit: contain;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06); /* Glassmorphism background */
+  background: rgba(255, 255, 255, 0.06);
   padding: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -186,7 +81,7 @@ body, html {
   justify-content: center;
   align-items: flex-start;
   padding: 50px;
-  background: transparent; /* Removed solid color for glass effect */
+  background: transparent;
 }
 
 .title {
@@ -197,7 +92,7 @@ body, html {
 }
 
 .highlight {
-  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  background: linear-gradient(to right, #00f0ff, #39ff14);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -217,7 +112,7 @@ body, html {
 }
 
 .get-started-button {
-  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  background: linear-gradient(to right, #00f0ff, #39ff14);
   color: #000;
   padding: 12px 30px;
   font-size: 1.2rem;
@@ -230,7 +125,7 @@ body, html {
 
 .get-started-button:hover {
   transform: scale(1.1);
-  background: linear-gradient(to right, #0088cc, #2ecc71); /* Slightly darker gradient on hover */
+  background: linear-gradient(to right, #0088cc, #2ecc71);
 }
 
 @media (max-width: 768px) {

@@ -1,62 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
 
-/* Base Styles */
-:root {
-  --primary-gradient: linear-gradient(to right, #00f0ff, #39ff14);
-  --primary-gradient-hover: linear-gradient(to right, #0088cc, #2ecc71);
-  --dark-bg: linear-gradient(135deg, #0f0f0f, #1f1f2e);
-  --card-bg: rgba(255, 255, 255, 0.06);
-  --text-light: #a8edff;
-  --text-white: #edfffe;
-  --border-light: rgba(255, 255, 255, 0.1);
-  --text-highlight: rgba(0, 240, 255, 0.7);
-  --text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-  --highlight-glow: 0 0 8px rgba(57, 255, 20, 0.4);
-  --time-gradient-user: linear-gradient(to right, rgba(0, 160, 180, 0.9), rgba(20, 200, 40, 0.9));
-  --time-gradient-bot: linear-gradient(to right, rgba(0, 200, 220, 0.9), rgba(40, 240, 60, 0.9));
-}
-
-/* Chatbot Page */
 .chatbot-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  background: var(--dark-bg);
-  padding: 2rem;
-  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1f1f2e); /* Matches WhatsHot background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem; /* Matches WhatsHot padding */
+  font-family: "Inter", sans-serif; /* Matches WhatsHot font */
 }
 
-/* Chatbot Container */
 .chatbot-container {
   width: 100%;
   max-width: 1000px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05); /* Glassmorphism from WhatsHot */
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  color: var(--text-white);
+  padding: 2.5rem; /* Matches WhatsHot padding */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Matches WhatsHot border */
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1); /* Matches WhatsHot shadow */
+  color: white;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   min-width: 360px;
-  border: 1px solid var(--border-light);
 }
 
-/* Header */
 .chatbot-container h1 {
   text-align: center;
   font-size: 2.8rem;
-  font-weight: 700;
+  font-weight: 800; /* Matches WhatsHot title weight */
   margin-bottom: 1rem;
-  background: var(--primary-gradient);
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  text-shadow: var(--text-shadow);
-  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 255, 255, 0.2); /* Adjusted shadow to match gradient */
 }
 
 /* Chat Window */
@@ -68,14 +46,21 @@
   overflow-y: auto;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.06); /* Matches WhatsHot card background */
   border-radius: 15px;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Matches WhatsHot border */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05); /* Matches WhatsHot shadow */
   scroll-behavior: smooth;
   scrollbar-width: thin;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transition: all 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.chat-window:hover {
+  transform: translateY(-5px); /* Matches WhatsHot hover effect */
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); /* Matches WhatsHot hover shadow */
 }
 
 .welcome-container {
@@ -92,18 +77,12 @@
   gap: 10px;
   font-size: 22px;
   font-weight: bold;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  text-shadow: var(--text-shadow);
+  color: #ccc; /* Adjusted to match WhatsHot card text */
 }
 
 .chatbot-logo {
   width: 40px;
   height: auto;
-  filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
 }
 
 /* Custom Scrollbar */
@@ -112,12 +91,12 @@
 }
 
 .chat-window::-webkit-scrollbar-track {
-  background: #1a233a;
+  background: rgba(255, 255, 255, 0.05); /* Adjusted to match glassmorphism */
   border-radius: 4px;
 }
 
 .chat-window::-webkit-scrollbar-thumb {
-  background: var(--primary-gradient);
+  background: #00f0ff; /* Adjusted to match WhatsHot gradient start */
   border-radius: 4px;
 }
 
@@ -134,6 +113,8 @@
   opacity: 0;
   animation: fadeIn 0.3s ease-out forwards;
   transition: transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.06); /* Matches WhatsHot card background */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Matches WhatsHot border */
 }
 
 @keyframes fadeIn {
@@ -143,49 +124,58 @@
 
 /* User Messages (Right Side) */
 .chat-message.user {
-  background: linear-gradient(135deg, #00f0ff, #39ff14);
   align-self: flex-end;
-  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
-  color: #001a19;
-  font-weight: 500;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2); 
+  color: black;/* Adjusted shadow */
 }
 
 /* Bot Messages (Left Side) */
 .chat-message.bot {
-  background: rgba(255, 255, 255, 0.1);
   align-self: flex-start;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-left: 2px solid #00f0ff;
-  color: var(--text-white);
-  text-shadow: var(--text-shadow);
+  background: linear-gradient(135deg, #66697f, #375383); /* WhatsHot gradient */
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2); 
+  color: white;/* Adjusted shadow */
 }
 
-/* Message Time - Improved Version */
+.bot-message-content {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.bot-message-content li {
+  margin: 5px 0;
+  display: list-item;
+}
+
+.bot-message-content p {
+  margin: 0 0 10px;
+}
+
+.bot-message-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.bot-message-content th,
+.bot-message-content td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.bot-message-content th {
+  background-color: #1d1a1a;
+}
+
+/* Message Time */
 .message-time {
   display: block;
-  font-size: 0.7rem;
-  margin-top: 0.8rem;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6); /* Timestamp black-ish for user clarity */
+  margin-top: 0.5rem;
   text-align: right;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  padding-right: 2px;
-}
-
-.chat-message.user .message-time {
-  background: var(--time-gradient-user);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.chat-message.bot .message-time {
-  background: var(--time-gradient-bot);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
 }
 
 /* Form Input Container */
@@ -202,27 +192,22 @@
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
   border-radius: 30px;
-  border: 2px solid var(--border-light);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-white);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Matches WhatsHot border */
+  background: rgba(255, 255, 255, 0.05); /* Matches WhatsHot input background */
+  color: white;
   transition: all 0.3s ease;
-  caret-color: #00f0ff;
 }
 
 .message-form-container input:focus {
-  border-color: #00f0ff;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  border-color: #00f0ff; /* Adjusted to match WhatsHot gradient */
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Adjusted shadow */
   outline: none;
-}
-
-.message-form-container input::placeholder {
-  color: rgba(168, 237, 255, 0.6);
 }
 
 /* Combined Button (Send/Voice) */
 .combined-button {
   padding: 1.2rem 2rem;
-  background: var(--primary-gradient);
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
   border: none;
   border-radius: 30px;
   cursor: pointer;
@@ -231,21 +216,17 @@
   align-items: center;
   gap: 0.5rem;
   position: relative;
-  color: #001a19;
-  font-weight: 600;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .combined-button:hover {
-  background: var(--primary-gradient-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+  transform: scale(1.05); /* Matches WhatsHot hover effect */
+  background: linear-gradient(to right, #0088cc, #2ecc71); /* Darker gradient on hover */
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); /* Adjusted shadow */
 }
 
 .combined-button .icon {
   width: 1.2rem;
   height: auto;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
 }
 
 /* Input Container for Visualization Data */
@@ -255,58 +236,56 @@
   gap: 1.5rem;
   padding: 1.5rem;
   margin-top: 1.5rem;
-  border: 2px solid #00f0ff;
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Matches WhatsHot border */
   border-radius: 15px;
-  background: var(--card-bg);
-  backdrop-filter: blur(5px);
-  color: var(--text-white);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.06); /* Matches WhatsHot card background */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05); /* Matches WhatsHot shadow */
+  transition: all 0.3s ease; /* Matches WhatsHot transition */
+}
+
+.input-container:hover {
+  transform: translateY(-5px); /* Matches WhatsHot hover effect */
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); /* Matches WhatsHot hover shadow */
 }
 
 .input-container input {
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
   border-radius: 12px;
-  border: 2px solid var(--border-light);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-white);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Matches WhatsHot border */
+  background: rgba(255, 255, 255, 0.05); /* Matches WhatsHot input background */
+  color: white;
   transition: all 0.3s ease;
-  caret-color: #00f0ff;
 }
 
 .input-container input:focus {
-  border-color: #00f0ff;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-}
-
-.input-container input::placeholder {
-  color: rgba(168, 237, 255, 0.6);
+  border-color: #00f0ff; /* Adjusted to match WhatsHot gradient */
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Adjusted shadow */
 }
 
 .input-container button {
   padding: 1.2rem 2rem;
-  background: var(--primary-gradient);
-  color: #001a19;
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
+  color: #000;
   font-size: 1.1rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 600;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .input-container button:hover {
-  background: var(--primary-gradient-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+  transform: scale(1.05); /* Matches WhatsHot hover effect */
+  background: linear-gradient(to right, #0088cc, #2ecc71); /* Darker gradient on hover */
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); /* Adjusted shadow */
 }
 
 /* Loading States */
 .loading {
   text-align: center;
   padding: 1rem;
-  color: var(--text-highlight);
+  color: #aaa; /* Adjusted to match WhatsHot empty state */
+  opacity: 0.7; /* Matches WhatsHot opacity */
 }
 
 .typing-indicator {
@@ -320,10 +299,9 @@
   width: 8px;
   height: 8px;
   margin: 0 4px;
-  background: var(--primary-gradient);
+  background-color: #00f0ff; /* Adjusted to match WhatsHot gradient */
   border-radius: 50%;
   animation: bounce 1.4s infinite ease-in-out;
-  box-shadow: var(--highlight-glow);
 }
 
 .dot:nth-child(2) {
@@ -335,84 +313,24 @@
 }
 
 @keyframes bounce {
-  0%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
   padding: 2rem;
-  color: var(--text-light);
+  color: #aaa; /* Adjusted to match WhatsHot empty state */
+  opacity: 0.7; /* Matches WhatsHot opacity */
 }
 
 .empty-state p:first-child {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  background: var(--primary-gradient);
+  background: linear-gradient(to right, #00f0ff, #39ff14); /* WhatsHot gradient */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  text-shadow: var(--text-shadow);
-}
-
-/* Message Content Styling */
-.bot-message-content {
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-.bot-message-content li {
-  margin: 5px 0;
-  display: list-item;
-}
-
-.bot-message-content p {
-  margin: 0 0 10px;
-}
-
-.bot-message-content strong, 
-.bot-message-content b {
-  color: #00f0ff;
-  font-weight: 600;
-  text-shadow: var(--text-shadow);
-}
-
-.bot-message-content a {
-  color: #39ff14;
-  text-decoration: none;
-  position: relative;
-  font-weight: 500;
-  text-shadow: var(--highlight-glow);
-  transition: all 0.3s ease;
-}
-
-.bot-message-content a:hover {
-  text-decoration: underline;
-  color: #7cffae;
-}
-
-.bot-message-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px 0;
-}
-
-.bot-message-content th,
-.bot-message-content td {
-  border: 1px solid var(--border-light);
-  padding: 8px;
-  text-align: left;
-}
-
-.bot-message-content th {
-  background: rgba(255, 255, 255, 0.1);
-  color: #00f0ff;
 }
 
 /* Mobile Responsiveness */
@@ -461,4 +379,44 @@
   .input-container input {
     font-size: 1rem;
   }
+}
+
+@media (max-width: 768px) {
+  .chatbot-container {
+    padding: 1.5rem;
+  }
+
+  .chatbot-container h1 {
+    font-size: 2rem;
+  }
+
+  .message-form-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .combined-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid rgba(0, 255, 255, 0.75);
+  animation: typing 2s steps(40, end), blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+.combined-button:focus-visible,
+.input-container button:focus-visible {
+  outline: 2px dashed #00f0ff;
+  outline-offset: 4px;
 }
