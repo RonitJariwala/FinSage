@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import "./Chatbot.css";
 import logo from "./logo.png";
 
@@ -8,8 +8,34 @@ const sendIcon = "/square-arrow-up-right-solid.svg";
 const microphoneIcon = "/microphone-solid.svg";
 const microphoneSlashIcon = "/microphone-slash-solid.svg";
 
+// Function to format the bot response
+const formatBotResponse = (text) => {
+  if (!text) return { __html: text };
+
+  let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  const lines = formattedText.split("\n").map(line => line.trim());
+  let hasList = false;
+  const formattedLines = lines.map(line => {
+    if (/^\s*[-*]\s+/.test(line)) {
+      hasList = true;
+      return `<li>${line.replace(/^\s*[-*]\s+/, "").trim()}</li>`;
+    }
+    return line;
+  }).join("\n");
+
+  if (hasList) {
+    formattedText = `<ul>${formattedLines}</ul>`;
+  } else {
+    formattedText = formattedLines;
+  }
+
+  formattedText = formattedText.replace(/^\s*[-*]\s+/gm, "• ");
+
+  return { __html: formattedText };
+};
+
 const Chatbot = () => {
-  // State for messages, input, loading, visualization, etc.
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,21 +48,26 @@ const Chatbot = () => {
   const [stackedCategories, setStackedCategories] = useState("");
   const [stackedFixed, setStackedFixed] = useState("");
   const [stackedVariable, setStackedVariable] = useState("");
-  const [scatterX, setScatterX] = useState("");
-  const [scatterY, setScatterY] = useState("");
+  const [scatterX, setScatterX] = useState(0);
+  const [scatterY, setScatterY] = useState(0);;
 
-  // State for voice recognition
   const [isListening, setIsListening] = useState(false);
-
-  // Refs for scrolling and Speech Recognition instance
   const chatWindowRef = useRef(null);
   const inputContainerRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [messages]);
 
-  // Load chat history on mount or when route changes
+  useEffect(() => {
+    if (showInputFields && inputContainerRef.current) {
+      inputContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showInputFields]);
+
   useEffect(() => {
     const savedMessages = localStorage.getItem("chatHistory");
     if (savedMessages) {
@@ -46,28 +77,12 @@ const Chatbot = () => {
         console.error("Error parsing chat history:", error);
       }
     }
-  }, [location.pathname]);
+  }, []);
 
-  // Save chat history whenever messages change
   useEffect(() => {
     localStorage.setItem("chatHistory", JSON.stringify(messages));
   }, [messages]);
 
-  // Auto-scroll chat window when new messages are added
-  useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  // Scroll input container into view when needed
-  useEffect(() => {
-    if (showInputFields && inputContainerRef.current) {
-      inputContainerRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [showInputFields]);
-
-  // Wrap handleUserMessage with useCallback for stability
   const handleUserMessage = useCallback(async (messageText) => {
     const newMessage = { sender: "user", text: messageText };
     setMessages((prev) => [...prev, newMessage]);
@@ -75,33 +90,18 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/query", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: messageText }),
+      const response = await axios.post("http://127.0.0.1:5001/api/query", {
+        query: messageText,
       });
-      if (!response.ok) throw new Error("Failed to fetch response");
+      if (!response.data) throw new Error("No response data");
 
-      const data = await response.json();
-      let botResponse = data.answer || "Sorry, I couldn't generate a response.";
+      let botResponse = response.data.answer || "I'm sorry, I couldn't understand your request.";
 
-      // Define keywords for visualization detection
-      const pieKeywords = [
-        "pie chart", "pie", "proportions", "expense breakdown", "distributions",
-        "doughnut chart", "ring chart", "budget breakdown", "spending distribution", "percentage breakdown"
-      ];
-      const lineKeywords = [
-        "line graph", "line chart", "trend", "time series", "growth trend",
-        "savings trend", "performance trend", "progress over time", "continuous data", "sequential data"
-      ];
-      const stackedKeywords = [
-        "stacked bar", "stacked bar chart", "stacked column", "cumulative expenses",
-        "expense breakdown", "expense stack", "bar breakdown", "layered bar", "grouped stacked"
-      ];
-      const scatterKeywords = [
-        "scatter plot", "scatter", "scatter diagram", "dot plot", "correlation",
-        "relationship", "financial correlation", "data distribution", "point plot", "dispersion plot"
-      ];
+      // Existing visualization logic
+      const pieKeywords = ["pie chart", "pie", "proportions", "expense breakdown"];
+      const lineKeywords = ["line graph", "line chart", "trend", "time series"];
+      const stackedKeywords = ["stacked bar", "stacked bar chart", "stacked column"];
+      const scatterKeywords = ["scatter plot", "scatter", "scatter diagram"];
 
       const lowerQuery = messageText.toLowerCase();
       if (pieKeywords.some((keyword) => lowerQuery.includes(keyword))) {
@@ -124,25 +124,24 @@ const Chatbot = () => {
         setShowInputFields(false);
         setVisualizationType(null);
       }
+
       setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
     } catch (error) {
       console.error("Error fetching response:", error);
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Error fetching response. Please try again." },
+        { sender: "bot", text: "Error processing request. Please try again." },
       ]);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // Wrap handleVoiceMessage with useCallback for stability
   const handleVoiceMessage = useCallback(async (transcript) => {
     if (!transcript.trim()) return;
     await handleUserMessage(transcript);
   }, [handleUserMessage]);
 
-  // Initialize Speech Recognition if supported
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
@@ -154,9 +153,7 @@ const Chatbot = () => {
         const transcript = event.results[0][0].transcript;
         handleVoiceMessage(transcript);
       };
-      recognition.onend = () => {
-        setIsListening(false);
-      };
+      recognition.onend = () => setIsListening(false);
       recognition.onerror = (event) => {
         console.error("Speech recognition error:", event);
         setIsListening(false);
@@ -167,8 +164,6 @@ const Chatbot = () => {
     }
   }, [handleVoiceMessage]);
 
-  // Combined action for the single button:
-  // If listening, stop; if text exists, send; otherwise, start listening.
   const handleCombinedAction = async (e) => {
     e.preventDefault();
     if (isListening) {
@@ -182,16 +177,6 @@ const Chatbot = () => {
     }
   };
 
-  // End chat: clears messages and stops voice recognition
-  const handleEndChat = () => {
-    if (isListening) {
-      recognitionRef.current && recognitionRef.current.stop();
-      setIsListening(false);
-    }
-    setMessages([]);
-  };
-
-  // Handle Enter key on input field
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -199,7 +184,6 @@ const Chatbot = () => {
     }
   };
 
-  // Handle visualization data submission
   const handleSubmitData = () => {
     if (visualizationType === "pie") {
       if (!categories.trim() || !values.trim()) {
@@ -293,6 +277,7 @@ const Chatbot = () => {
         })
       );
     }
+    
 
     const finalMessages = [
       ...messages,
@@ -302,7 +287,7 @@ const Chatbot = () => {
     localStorage.setItem("chatHistory", JSON.stringify(finalMessages));
     setTimeout(() => {
       setShowInputFields(false);
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
     }, 1000);
   };
 
@@ -319,7 +304,7 @@ const Chatbot = () => {
                   <img src={logo} alt="FinSage Logo" className="chatbot-logo" />
                 </p>
               </div>
-              <p>Ask me about personal finance, budgeting, investments, or charting your data.</p>
+              <p>Ask me about personal finance, historical stock data, stock comparisons, or charting your data.</p>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -328,7 +313,14 @@ const Chatbot = () => {
                 className={`chat-message ${message.sender}`}
                 style={{ alignSelf: message.sender === "user" ? "flex-end" : "flex-start" }}
               >
-                <p>{message.text}</p>
+                {message.sender === "bot" ? (
+                  <div
+                    className="bot-message-content"
+                    dangerouslySetInnerHTML={formatBotResponse(message.text)}
+                  />
+                ) : (
+                  <p>{message.text}</p>
+                )}
                 <span className="message-time">
                   {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </span>
@@ -348,7 +340,7 @@ const Chatbot = () => {
         <div className="message-form-container">
           <input
             type="text"
-            placeholder="Type a message..."
+            placeholder="Type a message (e.g., 'history for AAPL' or 'compare AAPL and MSFT')..."
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
             onKeyDown={handleKeyDown}

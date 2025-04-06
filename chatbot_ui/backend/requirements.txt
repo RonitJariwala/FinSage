@@ -1,9 +1,18 @@
+pandas
+numpy
+scikit-learn
+sentence-transformers
+matplotlib
+seaborn
+streamlit
+together
+torch>=1.6.0
 llama-index-core
 llama-index-embeddings-together
-llama-index-together
+# llama-index-together
 langchain-community
 sentence-transformers
-together-ai
+# together-ai
 pandas
 seaborn
 matplotlib

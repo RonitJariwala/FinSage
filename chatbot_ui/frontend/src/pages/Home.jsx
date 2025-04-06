@@ -1,29 +1,54 @@
-import React from 'react';
-import './Home.css';
-import expenseTrackingImage from './expense-tracking.jpg';
-import FinancialInsightsImage from './financial-insights.jpeg';
-import InvestmentStrategiesImage from './investment-stratergies.jpg'; // Ensure the file name matches exactly!
-import MapComponent from './MapComponent';
-import logo from './logo.png';
 
-// Import your local icon images
-import twitterIcon from './twitter-logo.jpg';
-import linkedinIcon from './linkedin-logo.png';
-import facebookIcon from './facebook-icon.png';
+import React, { useState } from "react";
+import axios from "axios";
+import "./Home.css";
+import expenseTrackingImage from "./expense-tracking.jpg";
+import FinancialInsightsImage from "./financial-insights.jpeg";
+import InvestmentStrategiesImage from "./investment-stratergies.jpg";
+import MapComponent from "./MapComponent";
+import logo from "./logo.png";
+import twitterIcon from "./twitter-logo.jpg";
+import linkedinIcon from "./linkedin-logo.png";
+import facebookIcon from "./facebook-icon.png";
 
 const Home = () => {
+  const [query, setQuery] = useState("");
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
+  const [chartImage, setChartImage] = useState(null);
+
+  const BACKEND_URL = "http://127.0.0.1:5001";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setResponse(null);
+    setError(null);
+    setChartImage(null);
+
+    try {
+      const result = await axios.post(`${BACKEND_URL}/api/query`, { query });
+      setResponse(result.data.answer);
+
+      if (result.data.chart) {
+        setChartImage(result.data.chart.image);
+      }
+    } catch (error) {
+      setError("Failed to fetch response from server.");
+    }
+  };
+
   return (
     <div className="home-page">
-      {/* Header Section */}
+      {/* Header */}
       <header className="header">
         <div className="logo-container">
           <img src={logo} alt="Finsage Logo" className="logo" />
           <h1 className="brand-name">FINSAGE</h1>
         </div>
         <nav className="nav-bar">
-          <a href="#features">Features</a>
-          <a href="#testimonials">Overview</a>
-          <a href="#contact">Contact</a>
+          <a href="#features">Why Us</a>
+          <a href="#testimonials">What We Do</a>
+          <a href="#contact">Contact Us</a>
         </nav>
       </header>
 
@@ -34,14 +59,36 @@ const Home = () => {
           <p>
             Simplify your financial journey with Finsage. Track expenses, learn investment strategies, and gain personalized insights—all in one place.
           </p>
-          <a href="#features" className="cta-button">Start Your Journey</a>
         </div>
+      </section>
+
+      {/* Query Form Section */}
+      <section className="query-section">
+        <form onSubmit={handleSubmit} className="query-form">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Ask a financial question (e.g., 'Show me a pie chart')"
+            required
+          />
+          <button type="submit">Submit</button>
+        </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {response && <p>{response}</p>}
+        {chartImage && (
+          <img
+            src={`data:image/png;base64,${chartImage}`}
+            alt="Expense Breakdown"
+            style={{ maxWidth: "500px", marginTop: "10px" }}
+          />
+        )}
       </section>
 
       {/* Features Section */}
       <section id="features" className="features">
-        <h2>Features Tailored for You</h2>
-        <div className="features-container">
+        <h2>Why Choose Finsage?</h2>
+        <div className="features-grid">
           <div className="feature-card">
             <img src={expenseTrackingImage} alt="Track Expenses" className="feature-image" />
             <h3>Track Expenses</h3>
@@ -62,7 +109,7 @@ const Home = () => {
 
       {/* Testimonials Section */}
       <section id="testimonials" className="testimonials">
-        <h2>Overview</h2>
+        <h2>What We Do</h2>
         <div className="testimonials-carousel">
           <div className="testimonial">
             <p>
@@ -82,19 +129,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer Section */}
-      <footer className="footer">
+      {/* Footer */}
+      <footer className="footer" id="contact">
         <div className="footer-content">
-          {/* Contact Information Section */}
           <div className="footer-section">
-            <h3>Contact Us</h3>
+            <h3>Reach Out</h3>
             <p>
               Email: <a href="mailto:support@finsage.com">support@finsage.com</a>
             </p>
             <p>Phone: +91 1234567890</p>
           </div>
-
-          {/* Social Media Section */}
+          <div className="footer-section">
+            <h3>Our Location</h3>
+            <MapComponent />
+          </div>
           <div className="footer-section">
             <h3>Follow Us</h3>
             <div className="social-icons">
@@ -110,14 +158,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* Location Section */}
-        <div className="footer-map">
-          <h3>Our Location</h3>
-          <MapComponent />
-        </div>
-
-        <p className="footer-note">© 2024 Finsage. All Rights Reserved.</p>
+        <p className="footer-note">© 2025 Finsage. All Rights Reserved.</p>
       </footer>
     </div>
   );
