@@ -5,6 +5,7 @@ import Chatbot from "./pages/Chatbot";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import WhatsHot from "./pages/WhatsHot";
+import StockAnalyzer from "./pages/StockAnalyzer";
 
 function App() {
   return (
