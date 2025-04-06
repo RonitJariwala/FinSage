@@ -4,7 +4,7 @@ import "./Chatbot.css";
 import logo from "./logo.png";
 
 // Icon paths from your public folder
-const sendIcon = "/square-arrow-up-right-solid.svg";
+const sendIcon = "/square-arrow-up-right-solid.svg";   
 const microphoneIcon = "/microphone-solid.svg";
 const microphoneSlashIcon = "/microphone-slash-solid.svg";
 
