@@ -1,1 +1,6 @@
 .env
+node_modules/
+chatbot_ui/backend/myenv/
+chatbot_ui/frontend/node_modules/
+chatbot_ui/frontend/.env
+chatbot_ui/backend/.env

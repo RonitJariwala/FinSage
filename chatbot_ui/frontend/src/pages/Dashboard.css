@@ -1,0 +1,78 @@
+/* Dashboard Page */
+.dashboard-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(26, 35, 58, 0.9);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header Styling */
+.dashboard-container h1 {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #00bcd4;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 188, 212, 0.2);
+}
+
+/* Charts Grid */
+
+
+/* Chart Section */
+.chart-section {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 188, 212, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Chart Section Heading */
+.chart-section h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #00bcd4;
+  margin-bottom: 1rem;
+}
+
+/* Chart Wrapper */
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+/* Error Message */
+.error {
+  text-align: center;
+  color: #ff6b6b;
+  font-weight: 600;
+  padding: 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+/* Loading Message */
+.dashboard-container p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #00bcd4;
+  font-weight: 500;
+}
