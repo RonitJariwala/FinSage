@@ -1,14 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
 
+/* Base Styles */
+:root {
+  --primary-gradient: linear-gradient(to right, #00f0ff, #39ff14);
+  --primary-gradient-hover: linear-gradient(to right, #0088cc, #2ecc71);
+  --dark-bg: linear-gradient(135deg, #0f0f0f, #1f1f2e);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --text-light: #ccc;
+  --text-white: #fff;
+  --border-light: rgba(255, 255, 255, 0.1);
+}
+
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0f0f0f, #1f1f2e);
-  color: white;
+  background: var(--dark-bg);
+  color: var(--text-white);
   scroll-behavior: smooth;
+  min-height: 100vh;
 }
 
+/* Layout */
 .home-page {
   min-height: 100vh;
   display: flex;
@@ -24,7 +37,7 @@ body, html {
   padding: 1.5rem 3rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-light);
   width: 100%;
   position: sticky;
   top: 0;
@@ -46,7 +59,7 @@ body, html {
 .brand-name {
   font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(to right, #00f0ff, #39ff14);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -61,13 +74,13 @@ body, html {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  background: linear-gradient(to right, #00f0ff, #39ff14); /* Gradient background */
-  -webkit-background-clip: text; /* Clip the background to text */
-  -webkit-text-fill-color: transparent; /* Fill text with gradient */
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-bar a:hover {
-  background: linear-gradient(to right, #0088cc, #2ecc71); /* Darker gradient on hover */
+  background: var(--primary-gradient-hover);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -88,12 +101,15 @@ body, html {
   font-size: 3rem;
   margin-bottom: 1rem;
   font-weight: 800;
-  color: white;
+  color: var(--text-white);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-content p {
   font-size: 1.2rem;
-  color: #ccc;
+  color: var(--text-light);
   margin-bottom: 2rem;
   max-width: 600px;
   margin-inline: auto;
@@ -118,19 +134,19 @@ body, html {
   padding: 1rem;
   width: 400px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-light);
   border-radius: 10px;
-  color: white;
+  color: var(--text-white);
   font-size: 1rem;
 }
 
 .query-form input::placeholder {
-  color: #ccc;
+  color: var(--text-light);
 }
 
 .query-form button {
   padding: 1rem 2rem;
-  background: linear-gradient(to right, #00f0ff, #39ff14);
+  background: var(--primary-gradient);
   color: #000;
   border: none;
   border-radius: 10px;
@@ -151,10 +167,19 @@ body, html {
   width: 100%;
 }
 
+.features h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #39ff14, #00c853); /* Green gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .features h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  background: linear-gradient(to right, #00f0ff, #39ff14);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
@@ -168,7 +193,7 @@ body, html {
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 15px;
@@ -198,7 +223,7 @@ body, html {
 
 .feature-card p {
   font-size: 1rem;
-  color: #ccc;
+  color: var(--text-light);
   line-height: 1.6;
 }
 
@@ -213,7 +238,7 @@ body, html {
 .testimonials h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  background: linear-gradient(to right, #00f0ff, #39ff14);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
@@ -225,13 +250,13 @@ body, html {
 }
 
 .testimonial {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
   padding: 1.5rem;
   border-radius: 15px;
   margin-bottom: 1rem;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
-  color: #ccc;
+  color: var(--text-light);
   transition: all 0.3s ease;
 }
 
@@ -246,7 +271,7 @@ body, html {
   backdrop-filter: blur(20px);
   padding: 3rem 2rem;
   width: 100%;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-light);
   margin-top: auto;
   text-align: center;
 }
@@ -268,14 +293,14 @@ body, html {
 
 .footer-section h3 {
   font-size: 1.5rem;
-  background: linear-gradient(to right, #00f0ff, #39ff14); /* Gradient background */
-  -webkit-background-clip: text; /* Clip the background to text */
-  -webkit-text-fill-color: transparent; /* Fill text with gradient */
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
 }
 
 .footer-section p, .footer-section a {
-  color: #ccc;
+  color: var(--text-light);
   font-size: 1rem;
   text-decoration: none;
   margin: 0.5rem 0;
@@ -310,6 +335,7 @@ body, html {
   margin-top: 2rem;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .header {
     padding: 1rem;
@@ -328,6 +354,14 @@ body, html {
 
   .hero-content p {
     font-size: 1rem;
+  }
+
+  .features h1 {
+    font-size: 2.5rem;
+  }
+
+  .features h2 {
+    font-size: 2rem;
   }
 
   .features-grid {
