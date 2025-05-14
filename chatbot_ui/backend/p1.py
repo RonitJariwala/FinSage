@@ -1,4 +1,3 @@
-
 import os
 import io
 import base64
@@ -9,6 +8,7 @@ import matplotlib.pyplot as plt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from together import Together
+os.environ["USE_TF"] = "0"
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
@@ -118,39 +118,6 @@ def get_stock_data(ticker, period="1d", interval="1m"):
 @app.route("/")
 def home():
     return jsonify({"message": "Welcome to FinSage API!"})
-
-# @app.route('/api/query', methods=['POST'])
-# def process_query():
-#     try:
-#         data = request.get_json()
-#         if not data:
-#             return jsonify({"error": "Invalid request, JSON data missing"}), 400
-        
-#         user_query = data.get('query', '').strip()
-#         if not user_query:
-#             return jsonify({"error": "Query not provided"}), 400
-        
-#         # Retrieve relevant answer from dataset
-#         relevant_question, relevant_answer = retrieve_answer(df, user_query)
-        
-#         # Generate a custom answer using Together AI
-#         generated_answer = generate_custom_answer(user_query, relevant_question, relevant_answer)
-
-#         # Check if query requires visualization
-#         chart_data = None
-#         lower_query = user_query.lower()
-#         if "pie chart" in lower_query or "expense breakdown" in lower_query:
-#             chart_data = {
-#                 "type": "pie",
-#                 "labels": ["Rent", "Food", "Transport", "Entertainment"],
-#                 "values": [1200, 600, 300, 150],
-#                 "image": generate_pie_chart()
-#             }
-
-#         return jsonify({"answer": generated_answer, "chart": chart_data})
-    
-#     except Exception as e:
-#         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 @app.route('/api/query', methods=['POST'])
 def process_query():
